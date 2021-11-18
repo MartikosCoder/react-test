@@ -4,6 +4,7 @@ import "./index.css";
 import Main from "./views/Main/Main";
 import Graph from "./views/Graph/Graph";
 import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { store } from "./store/index";
@@ -18,6 +19,7 @@ ReactDOM.render(
           <Route path="/" exact element={<Main />} />
           <Route path="/show" exact element={<Graph />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </React.StrictMode>
   </Provider>,
