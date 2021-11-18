@@ -1,0 +1,29 @@
+.form__input {
+  position: relative;
+  margin-top: 20px;
+}
+
+.form__input label {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  left: 16px;
+
+  color: rgba(17, 17, 17, 0.48);
+  background: #fff;
+
+  transition: top 0.3s;
+}
+
+.form__input input {
+  border: 1px solid #f1f1f1;
+  border-radius: 4px;
+
+  padding: 26px 16px 8px;
+
+  width: 100%;
+}
+
+.form__input input:focus + label, .form__input .entered + label {
+  top: 0px;
+}

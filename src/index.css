@@ -10,9 +10,20 @@ body {
 * {
   font-size: 24px;
   font-family: Montserrat, sans-serif;
+  outline: none;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+body, #root {
+  height: 100vh;
+}
+
+#root {
+  display: flex;
+
+  flex-direction: column;
 }

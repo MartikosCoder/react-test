@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
 
 function Graph() {
-  const users = useSelector((state) => state.users.value);
+  const users = useSelector((state) => state.user.value);
 
   if (users.length === 0)
     return (

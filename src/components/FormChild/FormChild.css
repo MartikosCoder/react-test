@@ -1,0 +1,26 @@
+.child__block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 30px;
+}
+
+.child__block .form__input {
+  margin-top: 0;
+}
+
+.child__block button {
+  background: none;
+  border: none;
+
+  color: #01a7fd;
+
+  cursor: pointer;
+
+  transition: color 0.3s;
+}
+
+.child__block button:hover {
+  color: #0074b1;
+}

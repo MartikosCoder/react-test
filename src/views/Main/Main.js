@@ -1,140 +1,107 @@
 import React, { useState } from "react";
 import "./Main.css";
 
+import Input from "../../components/Input/Input";
+import FormChild from "../../components/FormChild/FormChild";
+
 import { useSelector, useDispatch } from "react-redux";
-import { add, update } from "../../store/slices/users";
+import { set } from "../../store/slices/user";
 
 import { hasError } from "../../utils/errors";
 
 function Main() {
-  const users = useSelector((state) => state.users.value);
+  const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
 
-  const [is_current_user, setIsCurrentUser] = useState(false);
+  const [name, setName] = useState(user.name);
+  const [age, setAge] = useState(user.age);
+  const [children, setChildren] = useState(user.children);
 
-  const [current_id, setCurrentID] = useState("");
-  const [name, setName] = useState("");
-  const [work, setWork] = useState(0);
-  const [time, setTime] = useState(0);
-
-  const addItem = (e) => {
+  const addChild = (e) => {
     e.preventDefault();
-    console.log(users);
 
-    const has_name_error = is_current_user ? false : hasError(
+    const temp_children = [...children];
+    temp_children.push({ name: "", age: 0 });
+
+    setChildren(temp_children);
+  };
+  const updateChildInfo = (index, value, field) => {
+    const temp_children = [...children];
+
+    temp_children[index][field] = value;
+    setChildren(temp_children);
+  };
+  const removeChild = (index) => {
+    const temp_children = [...children];
+
+    temp_children.splice(index, 1);
+    setChildren(temp_children);
+  };
+
+  const saveInfo = (e) => {
+    e.preventDefault();
+
+    const name_invalid = hasError(
       name,
-      (a) => a.length === 0,
-      "Необходимо заполнить имя"
+      (e) => e.length === 0,
+      "Имя пользователя не указано."
     );
-    const has_work_error = hasError(
-      work,
-      (a) => a === 0,
-      "Необходимо заполнить кол-во задач"
-    );
-    const has_time_error = hasError(
-      time,
-      (a) => a === 0,
-      "Необходимо заполнить время"
+    const age_invalid = hasError(age, (e) => e <= 0, "Возраст указан неверно.");
+    const children_invalid = hasError(
+      children,
+      (e) => e.some((child) => child.name.length === 0 || child.age <= 0),
+      "Информация о детях указана неверно"
     );
 
-    if (has_name_error || has_work_error || has_time_error) {
-      return;
-    }
+    if (name_invalid || age_invalid || children_invalid) return;
 
-    if (is_current_user) {
-      dispatch(
-        update({
-          id: current_id,
-          work: Number(work),
-          time: Number(time),
-        })
-      );
-    } else {
-      dispatch(
-        add({
-          id: "_" + Math.random().toString(36).substr(2, 9),
-          name,
-          work: Number(work),
-          time: Number(time),
-        })
-      );
-    }
+    dispatch(
+      set({
+        name,
+        age,
+        children,
+      })
+    );
 
-    setCurrentID("");
-    setName("");
-    setWork(0);
-    setTime(0);
+    alert("Информация сохранена!");
   };
 
   return (
-    <main>
-      <form>
-        <select
-          value={current_id}
-          onChange={(e) => setCurrentID(e.target.value)}
-          className="form-selector"
-          disabled={!is_current_user}
-        >
-          <option value="" disabled>
-            Выберите существующего пользователя
-          </option>
-          {users.map((user) => (
-            <option value={user.id}>{user.name}</option>
-          ))}
-        </select>
+    <main className="main__page">
+      <form className="user__form">
+        <div className="form__header">
+          <h2>Персональные данные </h2>
+        </div>
+        <Input label="Имя" type="text" value={name} setValue={setName} />
+        <Input label="Возраст" type="number" value={age} setValue={setAge} />
+      </form>
+      <form className="children__form">
+        <div className="form__header">
+          <h2>Дети (макс. 5)</h2>
 
-        <section className="switcher">
-          <span className="left">Новый пользователь</span>
-          <label className="switch">
-            <input
-              type="checkbox"
-              value={is_current_user}
-              onClick={() => setIsCurrentUser(!is_current_user)}
-            />
-            <span className="slider round"></span>
-          </label>
-          <span className="right">Существующий пользователь</span>
-        </section>
+          <button
+            disabled={children.length === 5 ? "disabled" : ""}
+            className="add-btn"
+            onClick={addChild}
+          >
+            Добавить ребенка
+          </button>
+        </div>
 
-        <section className="form-inputs">
-          <div className="form-group">
-            <span>Введите имя: </span>
-            <input
-              type="text"
-              required
-              className="form-input"
-              name="Имя"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              disabled={is_current_user}
+        {children.map((_, index) => {
+          return (
+            <FormChild
+              child={children[index]}
+              setName={(value) => updateChildInfo(index, value, "name")}
+              setAge={(value) => updateChildInfo(index, value, "age")}
+              remove={() => removeChild(index)}
+              key={index}
             />
-          </div>
-          <div className="form-group">
-            <span>Введите кол-во задач: </span>
-            <input
-              type="number"
-              required
-              className="form-input"
-              name="Задачи"
-              value={work}
-              onChange={(e) => setWork(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <span>Введите затраченное время ( в часах ): </span>
-            <input
-              type="number"
-              required
-              className="form-input"
-              name="Время"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-            />
-          </div>
-        </section>
+          );
+        })}
 
-        <button onClick={(e) => addItem(e)} className="form-submit">
-          Добавить
+        <button className="save-btn" onClick={saveInfo}>
+          Сохранить
         </button>
       </form>
     </main>
