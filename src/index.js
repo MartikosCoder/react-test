@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import Main from "./views/Main/Main";
-import Graph from "./views/Graph/Graph";
+import Info from "./views/Info/Info";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import reportWebVitals from "./reportWebVitals";
@@ -17,7 +17,7 @@ ReactDOM.render(
         <Header />
         <Routes>
           <Route path="/" exact element={<Main />} />
-          <Route path="/show" exact element={<Graph />} />
+          <Route path="/show" exact element={<Info />} />
         </Routes>
         <Footer />
       </BrowserRouter>

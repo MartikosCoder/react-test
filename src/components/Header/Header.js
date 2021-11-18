@@ -11,7 +11,7 @@ function Header() {
   useEffect(() => {
     setIsHomeActive(window.location.pathname === "/");
     setIsShowActive(window.location.pathname === "/show");
-  }, []);
+  });
 
   const navigate = useNavigate();
 
