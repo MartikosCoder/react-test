@@ -8,6 +8,7 @@
 
 .child__block .form__input {
   margin-top: 0;
+  width: 260px;
 }
 
 .child__block button {
