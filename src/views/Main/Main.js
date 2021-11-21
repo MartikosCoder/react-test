@@ -4,6 +4,8 @@ import "./Main.css";
 import Input from "../../components/Input/Input";
 import FormChild from "../../components/FormChild/FormChild";
 
+import { useNavigate } from "react-router-dom";
+
 import { useSelector, useDispatch } from "react-redux";
 import { set } from "../../store/slices/user";
 
@@ -12,6 +14,8 @@ import { hasError } from "../../utils/errors";
 function Main() {
   const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const [name, setName] = useState(user.name);
   const [age, setAge] = useState(user.age);
@@ -64,6 +68,7 @@ function Main() {
     );
 
     alert("Информация сохранена!");
+    navigate('/show', { replace: true });
   };
 
   return (
