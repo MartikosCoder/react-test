@@ -6,21 +6,21 @@ import Info from "./views/Info/Info";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import { store } from "./store/index";
 import { Provider } from "react-redux";
 
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
-      <BrowserRouter>
+      <HashRouter>
         <Header />
         <Routes>
           <Route path="/" exact element={<Main />} />
           <Route path="/show" exact element={<Info />} />
         </Routes>
         <Footer />
-      </BrowserRouter>
+      </HashRouter>
     </React.StrictMode>
   </Provider>,
   document.getElementById("root")
