@@ -78,7 +78,7 @@ function Main() {
           <h2>Персональные данные </h2>
         </div>
         <Input label="Имя" type="text" value={name} setValue={setName} />
-        <Input label="Возраст" type="text" isNumber={true} value={age} setValue={setAge} />
+        <Input label="Возраст" type="text" isNumber={true} value={age} setValue={value => setAge(Number(value))} />
       </form>
       <form className="children__form">
         <div className="form__header">
