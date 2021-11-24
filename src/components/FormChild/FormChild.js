@@ -12,7 +12,7 @@ function FormChild(props) {
   return (
     <div className="child__block">
       <Input label="Имя" type="text" value={props.child.name} setValue={props.setName}/>
-      <Input label="Возраст" type="number" value={props.child.age} isNumber={true} setValue={props.setAge} />
+      <Input label="Возраст" type="text" value={props.child.age} isNumber={true} setValue={props.setAge} />
       <button onClick={removeAction}>Удалить</button>
     </div>
   );
